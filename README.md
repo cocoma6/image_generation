@@ -1,1 +1,3 @@
-# ECE598_model
+# ECE598 Generative AI
+
+## diffusion model implementation
