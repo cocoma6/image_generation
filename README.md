@@ -1,3 +1,4 @@
-# ECE 598 Generative AI
+# Generative AI
 
-## diffusion model implementation - Image generation
+## ECE 598 implementation
+diffusion model - Image generation
