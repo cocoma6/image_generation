@@ -1,34 +1,54 @@
 import React, { Component } from 'react';
-import Logo from './components/Logo/Logo';
+import { Configuration, OpenAIApi } from 'openai';
 import Navigation from './components/Navigation/Navigation';
+import Logo from './components/Logo/Logo';
+import ImagePromptBar from './components/ImagePromptBar/ImagePromptBar';
+import ImageButton from './components/ImageButton/ImageButton';
+import ImageResult from './components/ImageResult/ImageResult';
 import './App.css';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+
 
 class App extends Component {
+
   constructor() {
     super();
     this.state = {
       input: '',
-      imageUrl: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
+      imagePrompt: '',
+      imageUrl: ''
     }
   }
 
-  onInputChange = (event) => {
+  configuration = new Configuration({
+    apiKey: process.env.REACT_APP_API_KEY,
+  });
+  
+  openai = new OpenAIApi(this.configuration);
+
+
+  InputChange = (event) => {
     this.setState({input: event.target.value});
   }
 
-  onButtonSubmit = () => {
-    this.setState({imageUrl: this.state.input});
+  PromptChange = () => {
+    this.setState({imagePrompt: this.state.input});
+  }
+
+  GenerateImage = async () => {
+    console.log('click');
+    await this.PromptChange();
+    const imageParameters = {
+      prompt: this.state.imagePrompt,
+      n: 1,
+      size: "256x256",
+    }
+    console.log(imageParameters);
+    
+    const response = await this.openai.createImage(imageParameters);
+    const urlData = response.data.data[0].url
+    console.log(urlData);
+    
+    this.setState({imageUrl: urlData});
   }
 
 render() {
@@ -36,7 +56,15 @@ render() {
     <div >
     <Navigation />
     <Logo />
-    <ImageLinkForm />
+    <ImagePromptBar 
+      inputChange = {this.InputChange}
+    />
+    <ImageButton 
+      generateImage = {this.GenerateImage}
+    />
+    <ImageResult 
+      imageLink={this.state.imageUrl}
+    />
     </div>
   );
 }
