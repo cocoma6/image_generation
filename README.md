@@ -2,13 +2,14 @@
 
 ECE 598 implementation: diffusion model - Image generation
 
-# Getting Started with Create React App
+## Model in python
+Create beautiful artworks by fine-tuning diffusion models on custom datasets, and performing CLIP guided text-conditional sampling, followed by SWIN-transformer based super-resolution 
+
+## React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
+Available Scripts: In the project directory, you can run:
 
 ### `npm start`
 
